@@ -8,38 +8,96 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    var opc:Int = 0
-    @IBOutlet var btnRock: UIButton!
-    @IBOutlet var btnPaper: UIButton!
-    @IBOutlet var btnScissors: UIButton!
+    
+    @IBOutlet weak var Piedra: UIButton!
+    @IBOutlet weak var papel: UIButton!
+    @IBOutlet weak var Tijeras: UIButton!
+    @IBOutlet weak var Jugador: UILabel!
+    @IBOutlet weak var Computadora: UILabel!
+    @IBOutlet weak var otravez: UIButton!
+    @IBOutlet weak var resultado: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        btnRock.tag = 1
-        btnPaper.tag = 2
-        btnScissors.tag = 3
+        applyShadowAndCornerRadiousTo(button: Piedra)
+        applyShadowAndCornerRadiousTo(button: papel)
+        applyShadowAndCornerRadiousTo(button: Tijeras)
+        applyShadowAndCornerRadiousTo(button: otravez)
+    
     }
-
-
-    @IBAction func clickSelectOption(_ sender: UIButton) {
-        switch sender.tag{
-            case 1:
-                opc = 1
-                break;
-            case 2:
-                opc = 2
-                break;
-            case 3:
-                opc = 3
-                break;
-            default:
-                break;
-        }
+    
+    
+    @IBAction func tappedButton(_ sender: UIButton) {
+        Jugador.text = sender.titleLabel?.text!
+        otravez.isHidden = false
+        Piedra.isHidden = true
+        papel.isHidden = true
+        Tijeras.isHidden = true
         
-        let controller: ResultController
-        controller = storyboard?.instantiateViewController(identifier: "ResultController") as! ResultController
-        controller.opc = opc
-        present(controller, animated: true, completion: nil)
+        resultado.text = Ganador(choice: sender.currentTitle!)
+    }
+    
+    @IBAction func tappedotravez(_ sender: UIButton) {
+        sender.isHidden = true
+        Piedra.isHidden = false
+        papel.isHidden = false
+        Tijeras.isHidden = false
+        
+        Jugador.text = "Elección:"
+        Computadora.text = "Elección:"
+    }
+    
+    func applyShadowAndCornerRadiousTo(button: UIButton) {
+        button.layer.cornerRadius = 15
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.2
+        button.layer.shadowOffset = .zero
+        button.layer.shadowRadius = 10
+    }
+    
+    func Ganador(choice: String) -> String {
+        let eleccioncompu: [String] = ["👊", "✋", "✌"]
+        
+        let elc = eleccioncompu.randomElement()
+        
+        Computadora.text = elc
+        
+        switch choice {
+        case"👊":
+            switch elc {
+            case"👊":
+                return "empate"
+            case"✋":
+                 return "perdiste :("
+            case"✌":
+                return "ganaste :)"
+            default:
+                return "No se encontró el elemento que buscabas"
+            }
+        case"✋":
+            switch elc {
+            case"👊":
+                return "ganaste :)"
+            case"✋":
+                 return "empate"
+            case"✌":
+                return "perdiste :("
+            default:
+                return "No se encontró el elemento que buscabas"
+            }
+        case"✌":
+            switch elc {
+            case"👊":
+                return "perdiste :("
+            case"✋":
+                 return "ganaste :)"
+            case"✌":
+                return "empate"
+            default:
+                return "No se encontró el elemento que buscabas"
+            }
+        default:
+            return "No se encontró el elemento que buscabas"
+        }
     }
 }

@@ -26,6 +26,50 @@ class PiedrapapeltijerasUITests: XCTestCase {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
+        
+        func Probarpiedra () throws {
+            let app = XCUIApplication()
+            app.launch()
+            
+            //GIVEN
+            let boton1 = app.buttons["Piedra"]
+            
+            //WHEN
+            boton1.tap()
+            
+            //THEN
+            let Compu = app.staticTexts["ElecCompu"]
+            XCTAssertNotEqual(Compu.label, "Elecion:")
+        }
+        
+        func Probarpapel () throws {
+            let app = XCUIApplication()
+            app.launch()
+            
+            //GIVEN
+            let boton2 = app.buttons["Papel"]
+            
+            //WHEN
+            boton2.tap()
+            
+            //THEN
+            let Compu = app.staticTexts["ElecCompu"]
+            XCTAssertNotEqual(Compu.label, "Elecion:")
+        }
+        func Probartijeras () throws {
+            let app = XCUIApplication()
+            app.launch()
+            
+            //GIVEN
+            let boton3 = app.buttons["Tijeras"]
+            
+            //WHEN
+            boton3.tap()
+            
+            //THEN
+            let Compu = app.staticTexts["ElecCompu"]
+            XCTAssertNotEqual(Compu.label, "Elecion:")
+        }
 
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
